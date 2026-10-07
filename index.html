@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marcus Schriever, Resume</title>
+<meta name="description" content="Resume of Marcus Schriever, physics and mechanical engineering student">
+<meta name="color-scheme" content="dark light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  // Apply the saved theme before first paint to avoid a flash.
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+<style>
+  /*
+    Dark theme: black, dark-to-medium blues, dark purples.
+    Light theme: the exact photographic negative of each dark token
+    (every channel = 255 - channel), so the two themes mirror each other.
+  */
+  :root {
+    --bg:        #000000;
+    --ink:       #e6eaf4;
+    --ink-soft:  #9aa6c4;
+    --navy:      #0a1838;
+    --blue:      #2b56a8;
+    --blue-hi:   #6f95e0;
+    --plum:      #2a1146;
+    --violet:    #4c2780;
+    --rule:      #1c2a52;
+    --curve-a:   #2b56a8;
+    --curve-b:   #4c2780;
+    --curve-edge:#6f95e0;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg:        #ffffff;
+    --ink:       #19150b;
+    --ink-soft:  #65593b;
+    --navy:      #f5e7c7;
+    --blue:      #d4a957;
+    --blue-hi:   #906a1f;
+    --plum:      #d5eeb9;
+    --violet:    #b3d87f;
+    --rule:      #e3d5ad;
+    --curve-a:   #d4a957;
+    --curve-b:   #b3d87f;
+    --curve-edge:#906a1f;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg:        #ffffff;
+      --ink:       #19150b;
+      --ink-soft:  #65593b;
+      --navy:      #f5e7c7;
+      --blue:      #d4a957;
+      --blue-hi:   #906a1f;
+      --plum:      #d5eeb9;
+      --violet:    #b3d87f;
+      --rule:      #e3d5ad;
+      --curve-a:   #d4a957;
+      --curve-b:   #b3d87f;
+      --curve-edge:#906a1f;
+      color-scheme: light;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Figtree", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    transition: background-color .4s ease, color .4s ease;
+  }
+
+  /* ---------- French-curve background ---------- */
+  .curves {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .curves .template {
+    fill: url(#tint);
+    fill-rule: evenodd;
+    stroke: var(--curve-edge);
+    stroke-width: 1.25;
+    stroke-opacity: .55;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform .2s linear;
+  }
+  .curves .sweep {
+    fill: none;
+    stroke: var(--curve-edge);
+    stroke-width: 1;
+    stroke-opacity: .35;
+    vector-effect: non-scaling-stroke;
+  }
+  .stop-a { stop-color: var(--curve-a); }
+  .stop-b { stop-color: var(--curve-b); }
+
+  /* ---------- Top bar ---------- */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem max(1rem, env(safe-area-inset-left)) .75rem max(1rem, env(safe-area-inset-right));
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar nav {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+            mask-image: linear-gradient(90deg, #000 85%, transparent);
+  }
+  .bar nav::-webkit-scrollbar { display: none; }
+  .bar ul { display: flex; gap: 1.4rem; margin: 0; padding: 0 1.5rem 0 0; list-style: none; white-space: nowrap; }
+  .bar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: .9375rem;
+    font-weight: 500;
+    padding: .35rem 0;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+  }
+  .bar a:hover, .bar a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--blue); }
+
+  .theme-toggle {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    height: 2.5rem;
+    padding: 0 .9rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--navy);
+    color: var(--ink);
+    font: inherit;
+    font-size: .875rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .theme-toggle svg { width: 1.1rem; height: 1.1rem; }
+  .theme-toggle:hover { border-color: var(--blue); }
+
+  :focus-visible { outline: 2px solid var(--blue-hi); outline-offset: 3px; border-radius: 4px; }
+
+  /* ---------- Layout ---------- */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 0 1rem 6rem;
+  }
+
+  .hero { padding: 18vh 0 12vh; }
+  .hero h1 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(3.25rem, 13vw, 6.5rem);
+    line-height: .92;
+    letter-spacing: -.015em;
+    margin: 0 0 1.5rem;
+  }
+  .hero .role {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+    color: var(--blue-hi);
+    margin: 0 0 2rem;
+  }
+  .contact { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+  .contact a, .contact span {
+    display: inline-block;
+    padding: .45rem .9rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--navy) 70%, transparent);
+    color: var(--ink);
+    font-size: .9375rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .contact a:hover { border-color: var(--blue); }
+
+  section { padding: 3.5rem 0 1rem; }
+  section > h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2.1rem, 7vw, 2.9rem);
+    line-height: 1.05;
+    margin: 0 0 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  /* A swept stroke after each heading, echoing the background curves */
+  section > h2 .swoosh { flex: 1; height: 18px; color: var(--blue); }
+
+  .profile p { font-size: 1.1875rem; line-height: 1.7; margin: 0 0 1rem; max-width: 38em; }
+
+  /* Entries (education, work, other) */
+  .entries { list-style: none; margin: 0; padding: 0; }
+  .entry {
+    position: relative;
+    padding: 0 0 2.25rem 1.75rem;
+  }
+  /* Curved connector between entries — these are chronological, so a line ties them together */
+  .entry::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: .7rem;
+    bottom: -.2rem;
+    width: 2px;
+    background: linear-gradient(var(--blue), var(--violet));
+    border-radius: 2px;
+  }
+  .entry:last-child::before { bottom: 1.5rem; background: linear-gradient(var(--blue), transparent); }
+  .entry::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .45rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--blue-hi);
+  }
+  .entry h3 {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0;
+  }
+  .entry .org { color: var(--blue-hi); font-weight: 500; margin: .1rem 0 0; }
+  .entry .when { color: var(--ink-soft); font-size: .9375rem; margin: .15rem 0 .6rem; }
+  .entry ul { margin: .5rem 0 0; padding-left: 1.1rem; }
+  .entry li { margin: 0 0 .35rem; }
+  .entry li::marker { color: var(--violet); }
+  .entry p { margin: .5rem 0 0; }
+
+  /* Skills & traits */
+  .skill-group { margin: 0 0 2rem; }
+  .skill-group h3 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--blue-hi);
+    margin: 0 0 .75rem;
+  }
+  .skill-grid { display: grid; gap: .5rem 2rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+  .skill-group ul { margin: 0; padding: 0; list-style: none; }
+  .skill-group li {
+    padding: .5rem 0 .5rem 1.1rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .skill-group li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50% 0 50% 50%;
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: .875rem;
+    padding: 2rem 1rem calc(2rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 520px) {
+    body { font-size: 1rem; }
+    .hero { padding: 14vh 0 8vh; }
+    .theme-toggle .label { display: none; }
+    .theme-toggle { width: 2.5rem; padding: 0; justify-content: center; }
+    .profile p { font-size: 1.0625rem; }
+    section { padding-top: 2.75rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    body, .curves .template { transition: none; }
+  }
+
+  @media print {
+    .bar, .curves { display: none; }
+    body { background: #fff; color: #000; }
+  }
+</style>
+</head>
+<body>
+
+<!-- French-curve templates drawn as translucent drafting tools behind the page -->
+<svg class="curves" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="tint" x1="0" y1="0" x2="1" y2="1">
+      <stop class="stop-a" offset="0" stop-opacity=".30"/>
+      <stop class="stop-b" offset="1" stop-opacity=".22"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Large template, upper right -->
+  <g transform="translate(470 -90) rotate(18) scale(1.05)">
+    <path class="template" data-spin="1" d="
+      M 60 420 C 15 300 80 135 245 78 C 425 15 650 60 765 175 C 855 262 820 338 718 334
+      C 598 330 560 248 470 240 C 360 231 302 332 252 442 C 212 525 98 520 60 420 Z
+      M 300 170 C 362 128 472 118 562 158 C 604 178 584 212 540 200 C 470 181 392 190 330 222
+      C 290 242 262 200 300 170 Z
+      M 150 395 a 26 26 0 1 0 52 0 a 26 26 0 1 0 -52 0 Z"/>
+  </g>
+
+  <!-- Long, slender template sweeping across the lower left -->
+  <g transform="translate(-160 560) rotate(-14) scale(1.1)">
+    <path class="template" data-spin="-1" d="
+      M 20 210 C 40 110 170 40 330 32 C 520 22 700 70 860 150 C 940 190 930 238 870 236
+      C 760 232 650 170 520 160 C 400 150 300 190 230 250 C 160 310 40 300 20 210 Z
+      M 380 96 C 470 84 570 98 660 132 C 690 144 680 162 650 156 C 560 136 470 128 390 132
+      C 360 134 352 100 380 96 Z"/>
+  </g>
+
+  <!-- Small spiral-edged template, mid left -->
+  <g transform="translate(-60 160) rotate(-32) scale(.62)">
+    <path class="template" data-spin="1" d="
+      M 120 300 C 60 200 120 60 270 40 C 420 20 520 120 500 230 C 485 315 400 340 350 290
+      C 310 250 340 200 300 170 C 250 135 180 175 190 250 C 200 330 170 380 120 300 Z
+      M 380 120 a 22 22 0 1 0 44 0 a 22 22 0 1 0 -44 0 Z"/>
+  </g>
+
+  <!-- Free drafted strokes, as if traced along a template edge -->
+  <path class="sweep" d="M -40 880 C 220 700 420 980 690 760 S 980 520 1060 610"/>
+  <path class="sweep" d="M 1040 300 C 860 340 760 470 820 590 S 1000 700 1050 900"/>
+  <path class="sweep" d="M -20 120 C 120 180 160 360 320 380 S 520 260 600 330"/>
+
+</svg>
+
+<header class="bar">
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#work">Work experience</a></li>
+      <li><a href="#other">Other experience</a></li>
+      <li><a href="#skills">Skills &amp; traits</a></li>
+    </ul>
+  </nav>
+  <button class="theme-toggle" type="button" aria-label="Switch to light theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <path class="icon-moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>
+      <g class="icon-sun" style="display:none">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+      </g>
+    </svg>
+    <span class="label">Light</span>
+  </button>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Marcus<br>Schriever</h1>
+    <p class="role">Physics and mechanical engineering student</p>
+    <ul class="contact">
+      <li><a href="mailto:mrschriever3@gmail.com">mrschriever3@gmail.com</a></li>
+      <li><a href="tel:+13195953047">(319) 595-3047</a></li>
+      <li><span>Ames, Iowa</span></li>
+    </ul>
+  </div>
+
+  <section id="profile" class="profile">
+    <h2>Profile<svg class="swoosh" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C 60 14, 90 3, 160 4 S 260 12, 300 9" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></h2>
+    <p>Seeking an internship or co-op position to grow in relevant professional experience and understanding of the industry, thereby aiding in preparation for a full-time engineering position upon receiving a bachelor’s degree in both Physics (UNI) and Engineering (ISU).</p>
+  </section>
+
+  <section id="education">
+    <h2>Education<svg class="swoosh" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C 60 14, 90 3, 160 4 S 260 12, 300 9" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></h2>
+    <ol class="entries">
+      <li class="entry">
+        <h3>B.S. Mechanical Engineering</h3>
+        <p class="org">Iowa State University, Ames, Iowa</p>
+        <p class="when">8/2026 – present</p>
+        <p class="when">Graduating 5/2028</p>
+      </li>
+      <li class="entry">
+        <h3>B.S. Physics</h3>
+        <p class="org">University of Northern Iowa, Cedar Falls, Iowa</p>
+        <p class="when">8/2023 – 5/2026</p>
+        <p class="when">Graduating 5/2027</p>
+      </li>
+      <li class="entry">
+        <h3>High School Diploma</h3>
+        <p class="org">Valley Lutheran School</p>
+        <p class="when">10/2020 – 5/2023</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="work">
+    <h2>Work experience<svg class="swoosh" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C 60 14, 90 3, 160 4 S 260 12, 300 9" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></h2>
+    <ol class="entries">
+      <li class="entry">
+        <h3>Computationalist</h3>
+        <p class="org">Research, University of Northern Iowa Physics Department</p>
+        <p class="when">5/2026 – 8/2026</p>
+        <ul>
+          <li>Used server-aided programs to simulate physical systems</li>
+          <li>Worked closely with the Experimentalist team</li>
+          <li>Created new simulation methods for unexpected lab outcomes</li>
+        </ul>
+      </li>
+      <li class="entry">
+        <h3>Dairy, Checker, Courtesy</h3>
+        <p class="org">Fareway Meat &amp; Grocery, Cedar Falls, Iowa</p>
+        <p class="when">9/2021 – 9/2026</p>
+        <ul>
+          <li>Distributed goods by ensuring proper allocation and positioning</li>
+          <li>Accurately processed sales transactions and managed cash drawer</li>
+          <li>Provided quality customer service by greeting customers and resolving issues</li>
+        </ul>
+      </li>
+      <li class="entry">
+        <h3>Belayer</h3>
+        <p class="org">Rock Wall, University of Northern Iowa</p>
+        <p class="when">6/2026 – 8/2026</p>
+        <ul>
+          <li>Ensured safety of Rock Wall environment</li>
+          <li>Operated safety devices to ensure safety of climbers</li>
+          <li>Created an inviting environment for climbers of all skill levels</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <section id="other">
+    <h2>Other experience<svg class="swoosh" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C 60 14, 90 3, 160 4 S 260 12, 300 9" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></h2>
+    <ol class="entries">
+      <li class="entry">
+        <h3>Connection Group Leader</h3>
+        <p class="org">The Salt Company, Cedar Falls, Iowa</p>
+        <p class="when">2025 – 2026</p>
+        <ul>
+          <li>Led a small group Bible study based on the previous week’s sermon</li>
+          <li>Discipled a small group of college-age students</li>
+          <li>Attended discipleship meetings and events designed to grow leadership abilities</li>
+        </ul>
+      </li>
+      <li class="entry">
+        <h3>Robot Designer, Coach</h3>
+        <p class="org">FIRST Tech Challenge, Cedar Falls, Iowa</p>
+        <p class="when">2021 – 2023</p>
+        <ul>
+          <li>Designed the robot to meet the sanctioning body’s build requirements and accomplish the game objectives</li>
+          <li>Learned CAD and 3D printing and taught these skills to the team</li>
+          <li>Directed others to get the best out of them</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <section id="skills">
+    <h2>Skills &amp; traits<svg class="swoosh" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C 60 14, 90 3, 160 4 S 260 12, 300 9" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></h2>
+    <div class="skill-grid">
+    <div class="skill-group">
+      <h3>Software</h3>
+      <ul>
+        <li>Proficient in Onshape CAD software, learning SolidWorks</li>
+        <li>4 years of experience with 3D printing CAM software</li>
+        <li>Familiar with Google Suite, learning Microsoft Suite</li>
+        <li>Coding experience in MATLAB, Python, C++, JavaScript, and others</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h3>Interpersonal</h3>
+      <ul>
+        <li>Precise communication in multiple mediums</li>
+        <li>Dedicated to learning and growing</li>
+        <li>Collaborative worker</li>
+        <li>Sees the best in others</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h3>Technical</h3>
+      <ul>
+        <li>Analytical thinking</li>
+        <li>Spatial reasoning</li>
+        <li>Intuitive design sensibility</li>
+        <li>Conceptualization</li>
+        <li>Detail-oriented thinking</li>
+        <li>Continuous improvement</li>
+      </ul>
+    </div>
+    </div>
+  </section>
+</main>
+
+<footer>Marcus Schriever, Ames, Iowa</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.querySelector('.theme-toggle');
+    var label = btn.querySelector('.label');
+    var moon = btn.querySelector('.icon-moon');
+    var sun = btn.querySelector('.icon-sun');
+    var mq = window.matchMedia('(prefers-color-scheme: light)');
+
+    function current() {
+      return root.dataset.theme || (mq.matches ? 'light' : 'dark');
+    }
+    function render() {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      label.textContent = next === 'light' ? 'Light' : 'Dark';
+      btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+      moon.style.display = next === 'dark' ? '' : 'none';
+      sun.style.display = next === 'light' ? '' : 'none';
+    }
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      render();
+    });
+    if (mq.addEventListener) mq.addEventListener('change', render);
+    render();
+
+    // Highlight the section currently in view.
+    var links = document.querySelectorAll('.bar a');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (a) {
+            var on = a.getAttribute('href') === '#' + e.target.id;
+            a.setAttribute('aria-current', on ? 'true' : 'false');
+            if (on && a.scrollIntoView && window.innerWidth < 640) {
+              a.parentElement.parentElement.parentElement.scrollTo({ left: a.offsetLeft - 16, behavior: 'smooth' });
+            }
+          });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+    }
+
+    // Templates turn slightly as the page scrolls, like a drafter rotating the curve.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var shapes = document.querySelectorAll('.curves [data-spin]');
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+          var p = scrollY / max;
+          shapes.forEach(function (s) {
+            s.style.transform = 'rotate(' + (p * 14 * s.dataset.spin) + 'deg)';
+          });
+          ticking = false;
+        });
+      }, { passive: true });
+    }
+  })();
+</script>
+</body>
+</html>
