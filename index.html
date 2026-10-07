@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Marcus Schriever, Resume</title>
 <meta name="description" content="Resume of Marcus Schriever, physics and mechanical engineering student">
-<meta name="color-scheme" content="dark light">
+<meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,56 +20,34 @@
 </script>
 <style>
   /*
-    Dark theme: black, dark-to-medium blues, dark purples.
-    Light theme: the exact photographic negative of each dark token
-    (every channel = 255 - channel), so the two themes mirror each other.
+    Dark is the default theme: gradients run blue, to purple, to black.
+    Light theme (chosen with the toggle): gradients run red, to yellow, to white.
+    --g1/--g2/--g3 are the three gradient stops; --g3 always equals the page background,
+    so every gradient fades into the page.
   */
   :root {
-    --bg:        #000000;
-    --ink:       #e6eaf4;
-    --ink-soft:  #9aa6c4;
-    --navy:      #0a1838;
-    --blue:      #2b56a8;
-    --blue-hi:   #6f95e0;
-    --plum:      #2a1146;
-    --violet:    #4c2780;
-    --rule:      #1c2a52;
-    --curve-a:   #2b56a8;
-    --curve-b:   #4c2780;
-    --curve-edge:#6f95e0;
+    --bg:       #000000;
+    --ink:      #e8eaf6;
+    --ink-soft: #a0a6c8;
+    --g1:       #3767d6;
+    --g2:       #6b2fb0;
+    --g3:       #000000;
+    --accent:   #8aa8f0;
+    --accent-2: #b58de8;
+    --rule:     #1e2350;
     color-scheme: dark;
   }
   :root[data-theme="light"] {
-    --bg:        #ffffff;
-    --ink:       #19150b;
-    --ink-soft:  #65593b;
-    --navy:      #f5e7c7;
-    --blue:      #d4a957;
-    --blue-hi:   #906a1f;
-    --plum:      #d5eeb9;
-    --violet:    #b3d87f;
-    --rule:      #e3d5ad;
-    --curve-a:   #d4a957;
-    --curve-b:   #b3d87f;
-    --curve-edge:#906a1f;
+    --bg:       #ffffff;
+    --ink:      #21140f;
+    --ink-soft: #6f5045;
+    --g1:       #d8262c;
+    --g2:       #f5bf1c;
+    --g3:       #ffffff;
+    --accent:   #b01f1c;
+    --accent-2: #9a5c00;
+    --rule:     #f2d9a6;
     color-scheme: light;
-  }
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --bg:        #ffffff;
-      --ink:       #19150b;
-      --ink-soft:  #65593b;
-      --navy:      #f5e7c7;
-      --blue:      #d4a957;
-      --blue-hi:   #906a1f;
-      --plum:      #d5eeb9;
-      --violet:    #b3d87f;
-      --rule:      #e3d5ad;
-      --curve-a:   #d4a957;
-      --curve-b:   #b3d87f;
-      --curve-edge:#906a1f;
-      color-scheme: light;
-    }
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -95,10 +73,8 @@
   }
   .curves .template {
     fill: url(#tint);
-    fill-rule: evenodd;
-    stroke: var(--curve-edge);
-    stroke-width: 1.25;
-    stroke-opacity: .55;
+    stroke: url(#edge);
+    stroke-width: 1.5;
     vector-effect: non-scaling-stroke;
     transform-box: fill-box;
     transform-origin: center;
@@ -106,13 +82,13 @@
   }
   .curves .sweep {
     fill: none;
-    stroke: var(--curve-edge);
-    stroke-width: 1;
-    stroke-opacity: .35;
+    stroke: url(#edge);
+    stroke-width: 1.25;
     vector-effect: non-scaling-stroke;
   }
-  .stop-a { stop-color: var(--curve-a); }
-  .stop-b { stop-color: var(--curve-b); }
+  .stop-1 { stop-color: var(--g1); }
+  .stop-2 { stop-color: var(--g2); }
+  .stop-3 { stop-color: var(--g3); }
 
   /* ---------- Top bar ---------- */
   .bar {
@@ -145,9 +121,9 @@
     font-weight: 500;
     padding: .35rem 0;
     display: inline-block;
-    border-bottom: 2px solid transparent;
+    background: no-repeat left bottom / 0 2px linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
   }
-  .bar a:hover, .bar a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--blue); }
+  .bar a:hover, .bar a[aria-current="true"] { color: var(--ink); background-size: 100% 2px; }
 
   .theme-toggle {
     flex: none;
@@ -158,7 +134,7 @@
     padding: 0 .9rem;
     border-radius: 999px;
     border: 1px solid var(--rule);
-    background: var(--navy);
+    background: linear-gradient(120deg, color-mix(in srgb, var(--g1) 30%, var(--bg)), color-mix(in srgb, var(--g2) 22%, var(--bg)) 60%, var(--g3));
     color: var(--ink);
     font: inherit;
     font-size: .875rem;
@@ -166,9 +142,9 @@
     cursor: pointer;
   }
   .theme-toggle svg { width: 1.1rem; height: 1.1rem; }
-  .theme-toggle:hover { border-color: var(--blue); }
+  .theme-toggle:hover { border-color: var(--g1); }
 
-  :focus-visible { outline: 2px solid var(--blue-hi); outline-offset: 3px; border-radius: 4px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
   /* ---------- Layout ---------- */
   main {
@@ -192,7 +168,7 @@
     font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
     font-size: clamp(1.4rem, 4.5vw, 1.9rem);
-    color: var(--blue-hi);
+    color: var(--accent);
     margin: 0 0 2rem;
   }
   .contact { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; padding: 0; list-style: none; }
@@ -201,13 +177,13 @@
     padding: .45rem .9rem;
     border: 1px solid var(--rule);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--navy) 70%, transparent);
+    background: linear-gradient(120deg, color-mix(in srgb, var(--g1) 30%, var(--bg)), color-mix(in srgb, var(--g2) 22%, var(--bg)) 60%, var(--g3));
     color: var(--ink);
     font-size: .9375rem;
     text-decoration: none;
     overflow-wrap: anywhere;
   }
-  .contact a:hover { border-color: var(--blue); }
+  .contact a:hover { border-color: var(--g1); }
 
   section { padding: 3.5rem 0 1rem; }
   section > h2 {
@@ -221,7 +197,8 @@
     gap: 1rem;
   }
   /* A swept stroke after each heading, echoing the background curves */
-  section > h2 .swoosh { flex: 1; height: 18px; color: var(--blue); }
+  section > h2 .swoosh { flex: 1; height: 18px; }
+  section > h2 .swoosh path { stroke: url(#swoosh); }
 
   .profile p { font-size: 1.1875rem; line-height: 1.7; margin: 0 0 1rem; max-width: 38em; }
 
@@ -239,10 +216,10 @@
     top: .7rem;
     bottom: -.2rem;
     width: 2px;
-    background: linear-gradient(var(--blue), var(--violet));
+    background: linear-gradient(var(--g1), var(--g2));
     border-radius: 2px;
   }
-  .entry:last-child::before { bottom: 1.5rem; background: linear-gradient(var(--blue), transparent); }
+  .entry:last-child::before { bottom: 1.5rem; background: linear-gradient(var(--g1), var(--g2) 60%, var(--g3)); }
   .entry::after {
     content: "";
     position: absolute;
@@ -252,7 +229,7 @@
     height: 12px;
     border-radius: 50%;
     background: var(--bg);
-    border: 2px solid var(--blue-hi);
+    border: 2px solid var(--g1);
   }
   .entry h3 {
     font-size: 1.1875rem;
@@ -260,11 +237,11 @@
     line-height: 1.35;
     margin: 0;
   }
-  .entry .org { color: var(--blue-hi); font-weight: 500; margin: .1rem 0 0; }
+  .entry .org { color: var(--accent); font-weight: 500; margin: .1rem 0 0; }
   .entry .when { color: var(--ink-soft); font-size: .9375rem; margin: .15rem 0 .6rem; }
   .entry ul { margin: .5rem 0 0; padding-left: 1.1rem; }
   .entry li { margin: 0 0 .35rem; }
-  .entry li::marker { color: var(--violet); }
+  .entry li::marker { color: var(--accent-2); }
   .entry p { margin: .5rem 0 0; }
 
   /* Skills & traits */
@@ -274,7 +251,7 @@
     font-style: italic;
     font-weight: 500;
     font-size: 1.5rem;
-    color: var(--blue-hi);
+    color: var(--accent);
     margin: 0 0 .75rem;
   }
   .skill-grid { display: grid; gap: .5rem 2rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
@@ -292,7 +269,7 @@
     width: .5rem;
     height: .5rem;
     border-radius: 50% 0 50% 50%;
-    background: linear-gradient(135deg, var(--blue), var(--violet));
+    background: linear-gradient(135deg, var(--g1), var(--g2));
   }
 
   footer {
@@ -327,12 +304,24 @@
 </head>
 <body>
 
-<!-- French-curve templates drawn as translucent drafting tools behind the page -->
+<!-- French-curve templates drawn as translucent drafting tools behind the page.
+     Each curve stands on its own: no holes, and no curve overlaps or sits inside another. -->
 <svg class="curves" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs>
     <linearGradient id="tint" x1="0" y1="0" x2="1" y2="1">
-      <stop class="stop-a" offset="0" stop-opacity=".30"/>
-      <stop class="stop-b" offset="1" stop-opacity=".22"/>
+      <stop class="stop-1" offset="0" stop-opacity=".55"/>
+      <stop class="stop-2" offset=".5" stop-opacity=".4"/>
+      <stop class="stop-3" offset="1" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop class="stop-1" offset="0"/>
+      <stop class="stop-2" offset=".55"/>
+      <stop class="stop-3" offset="1"/>
+    </linearGradient>
+    <linearGradient id="swoosh" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="300" y2="0">
+      <stop class="stop-1" offset="0"/>
+      <stop class="stop-2" offset=".55"/>
+      <stop class="stop-3" offset="1"/>
     </linearGradient>
   </defs>
 
@@ -340,34 +329,26 @@
   <g transform="translate(470 -90) rotate(18) scale(1.05)">
     <path class="template" data-spin="1" d="
       M 60 420 C 15 300 80 135 245 78 C 425 15 650 60 765 175 C 855 262 820 338 718 334
-      C 598 330 560 248 470 240 C 360 231 302 332 252 442 C 212 525 98 520 60 420 Z
-      M 300 170 C 362 128 472 118 562 158 C 604 178 584 212 540 200 C 470 181 392 190 330 222
-      C 290 242 262 200 300 170 Z
-      M 150 395 a 26 26 0 1 0 52 0 a 26 26 0 1 0 -52 0 Z"/>
+      C 598 330 560 248 470 240 C 360 231 302 332 252 442 C 212 525 98 520 60 420 Z"/>
   </g>
 
-  <!-- Long, slender template sweeping across the lower left -->
-  <g transform="translate(-160 560) rotate(-14) scale(1.1)">
+  <!-- Long, slender template along the bottom -->
+  <g transform="translate(-170 720) rotate(-12)">
     <path class="template" data-spin="-1" d="
       M 20 210 C 40 110 170 40 330 32 C 520 22 700 70 860 150 C 940 190 930 238 870 236
-      C 760 232 650 170 520 160 C 400 150 300 190 230 250 C 160 310 40 300 20 210 Z
-      M 380 96 C 470 84 570 98 660 132 C 690 144 680 162 650 156 C 560 136 470 128 390 132
-      C 360 134 352 100 380 96 Z"/>
+      C 760 232 650 170 520 160 C 400 150 300 190 230 250 C 160 310 40 300 20 210 Z"/>
   </g>
 
   <!-- Small spiral-edged template, mid left -->
-  <g transform="translate(-60 160) rotate(-32) scale(.62)">
+  <g transform="translate(-60 250) rotate(-32) scale(.6)">
     <path class="template" data-spin="1" d="
       M 120 300 C 60 200 120 60 270 40 C 420 20 520 120 500 230 C 485 315 400 340 350 290
-      C 310 250 340 200 300 170 C 250 135 180 175 190 250 C 200 330 170 380 120 300 Z
-      M 380 120 a 22 22 0 1 0 44 0 a 22 22 0 1 0 -44 0 Z"/>
+      C 310 250 340 200 300 170 C 250 135 180 175 190 250 C 200 330 170 380 120 300 Z"/>
   </g>
 
-  <!-- Free drafted strokes, as if traced along a template edge -->
-  <path class="sweep" d="M -40 880 C 220 700 420 980 690 760 S 980 520 1060 610"/>
-  <path class="sweep" d="M 1040 300 C 860 340 760 470 820 590 S 1000 700 1050 900"/>
-  <path class="sweep" d="M -20 120 C 120 180 160 360 320 380 S 520 260 600 330"/>
-
+  <!-- Free drafted strokes, traced in the open spaces between templates -->
+  <path class="sweep" d="M -30 600 C 90 560 200 640 330 590 S 470 470 560 520"/>
+  <path class="sweep" d="M 1040 700 C 960 720 900 800 930 880 S 1010 980 1060 1000"/>
 </svg>
 
 <header class="bar">
@@ -538,10 +519,8 @@
     var label = btn.querySelector('.label');
     var moon = btn.querySelector('.icon-moon');
     var sun = btn.querySelector('.icon-sun');
-    var mq = window.matchMedia('(prefers-color-scheme: light)');
-
     function current() {
-      return root.dataset.theme || (mq.matches ? 'light' : 'dark');
+      return root.dataset.theme === 'light' ? 'light' : 'dark';
     }
     function render() {
       var next = current() === 'dark' ? 'light' : 'dark';
@@ -556,7 +535,6 @@
       try { localStorage.setItem('theme', next); } catch (e) {}
       render();
     });
-    if (mq.addEventListener) mq.addEventListener('change', render);
     render();
 
     // Highlight the section currently in view.
